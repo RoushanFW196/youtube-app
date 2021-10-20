@@ -1,0 +1,247 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/6716631a00.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #navbar{
+            display: flex;
+            justify-content: space-between;
+          
+            height: 50px;
+            align-items: center;
+          
+        }
+     a{
+         text-decoration: none;
+         font-size: 20px;
+         margin: 10px;
+        
+     }
+#mid input{
+    width: 600px;
+    height: 30px;
+    font-size: 15px;
+}
+ .find{
+    
+     padding: 7px 20px;
+     margin-left:-5px;
+     background-color: rgb(243, 229, 229);
+ }
+
+.mic{
+    background-color: floralwhite;
+    border-radius: 50%;
+    padding: 10px;
+}
+.yl{
+    background-color: red;
+    
+}
+
+#content{
+    width: 100%;
+    height: 650px;
+
+    display: flex;
+    background-color: aliceblue;
+}
+  #leftmenu{
+      width: 20%;
+    
+  
+    
+  }
+  #container{
+      width: 80%;
+  }
+.btns{
+    padding: 10px;
+    display: flex;
+   gap:30px;
+  
+  
+}
+.btns button{
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-right: 20px;
+    color: white;
+    background-color:lightsteelblue;
+}
+  .btns button:nth-child(1){
+      background-color: black;
+  }
+
+  #videocontainer{
+      overflow: scroll;
+      height: 600px;
+      display: grid;
+      grid-template-columns: repeat(4 ,23%);
+      grid-gap:2%;
+      
+  }
+   #leftmenu h3{
+       text-align: center;
+       margin:10px;
+   }
+
+.icon{
+    margin-right: 20px;
+}
+
+    </style>
+</head>
+<body>
+    
+       <div id="navbar">
+     <div id="left">
+       <a ><i class="fas fa-bars"></i></a>
+       <a class=" yl" ><i class="fab fa-youtube"></i></a>
+       <a >YouTube</a>
+     </div>
+
+     <div id="mid">
+       <input type="text" placeholder="Search" id="query1">
+       <a onclick="searchVideos()" class="find"><i class="fas fa-search"></i></a>
+       <a class=" mic"><i class="fas fa-microphone"></i></a>
+     </div>
+
+     <div id="right">
+        
+        <a ><i class="far fa-bell"></i></a>
+        <a><i class="fas fa-border-none"></i></a>
+        <a ><i class="fas fa-video"></i></a>
+       <a ><i class="fas fa-user-circle"></i> </a> 
+     </div>
+
+       </div>
+
+       <hr/>
+
+
+
+   <div id="content">
+       <div id="leftmenu">
+         <h3><i    class="fas fa-home icon"></i>home</h3>
+          <h3><i  class="far fa-compass icon"></i>Explore</h3>
+          <h3>Subscription</a></h3>
+         
+
+           <hr/>
+           <h3>Library</a></h3>
+           <h3><i   class="fas fa-history icon"></i>History</h3>
+           <h3><i   class="fas fa-play-circle icon"></i>Your Videos</h3>
+           <h3><i  class="far fa-clock icon"></i>Watch later</h3>
+           <h3><i   class="far fa-thumbs-up icon"></i>Liked videos</a></h3>
+
+       <hr/>
+
+
+       </div>
+       <div id="container">
+           <div class="btns">
+               <button>All</button>
+               <button>Music</button>
+               <button>Movie</button>
+               <button>Javascript</button>
+               <button>News</button>
+               <button>Comedy</button>
+               <button>Trending</button>
+               <button>Histories</button>
+               <button>Courses</button>
+           </div>
+           <hr/>
+           <div id="videocontainer">
+            
+           </div>
+       </div>
+   </div>
+
+
+
+
+
+
+
+
+
+    <script>
+
+let videocontainer=document.getElementById("videocontainer");
+    async  function searchVideos(){
+      
+         let query=document.getElementById("query1").value;
+         console.log(query)
+    
+         let res= await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${query}&type=video&key=AIzaSyADneLOBTT2oFU0iMng52TtR3IP8GawZAI&maxResults=20`)
+         let data = await res.json();
+         // console.log(data.items)
+         console.log(data)
+
+       appendvideos(data.items)
+
+
+
+       }
+
+   
+     function appendvideos(videoarr){
+         videoarr.forEach(({id:{videoId}}) => {
+
+             
+            let div=document.createElement("div");
+             div.innerHTML=`<iframe width="250" height="150" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+
+          videocontainer.append(div)
+
+         });
+
+
+
+
+
+
+
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+</body>
+</html>
