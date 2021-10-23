@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+  <input type="text" name="" id="query">
+
+
+
+
+
+
+
+    <script>
+  //AIzaSyADneLOBTT2oFU0iMng52TtR3IP8GawZAI
+
+// https://youtube.googleapis.com/youtube/v3/search?location=India&locationRadius=100&maxResults=20&order=rating&regionCode=India&videoType=any&key=[YOUR_API_KEY] 
+
+            
+let query= document.getElementById("query").value;
+  async function searchvideos(query){
+
+
+    let res = await fetch(` https://youtube.googleapis.com/youtube/v3/search?maxResults=20&order=rating&regionCode=IN&videoType=any&key=AIzaSyADneLOBTT2oFU0iMng52TtR3IP8GawZAI 
+`)
+    let data= await res.json();
+     console.log(data);
+     document.body.append(data.items)
+  }
+
+
+    searchvideos(query);
+    </script>
+
+
+</body>
+</html>

@@ -91,6 +91,7 @@
       display: grid;
       grid-template-columns: repeat(4 ,23%);
       grid-gap:2%;
+      visibility: hidden;
       
   }
    #leftmenu h3{
@@ -181,8 +182,15 @@
     <script>
 
 let videocontainer=document.getElementById("videocontainer");
+    
+
+
+
+
+
+
     async  function searchVideos(){
-      
+      videocontainer.innerHTML=null;
          let query=document.getElementById("query1").value;
          console.log(query)
     
@@ -192,12 +200,14 @@ let videocontainer=document.getElementById("videocontainer");
          console.log(data)
 
        appendvideos(data.items)
-
-
+        document.getElementById("videocontainer").style.visibility="visible"
 
        }
 
    
+     
+
+
      function appendvideos(videoarr){
          videoarr.forEach(({id:{videoId}}) => {
 
@@ -209,18 +219,34 @@ let videocontainer=document.getElementById("videocontainer");
 
          });
 
-
-
-
-
-
-
-
      }
 
 
 
 
+     async function defaultvideos(){
+        document.getElementById("videocontainer").style.visibility="visible";
+         let res = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=IN&key=AIzaSyADneLOBTT2oFU0iMng52TtR3IP8GawZAI&maxResults=20`);
+         let data= await res.json();
+         console.log(data.items)
+         appenddefaultvideos(data.items)
+     }
+
+
+          function appenddefaultvideos(arr){
+
+
+  arr.forEach(element => {
+      
+    let def_div =document.createElement("div");
+
+    def_div.innerHTML=`<iframe width="250" height="150" src="https://www.youtube.com/embed/${element.id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    // let p1=document.createElement("p");
+    // p1.textContent=element.snippet.title;
+    videocontainer.append(def_div)
+
+
+  });
 
 
 
@@ -229,6 +255,18 @@ let videocontainer=document.getElementById("videocontainer");
 
 
 
+
+
+
+
+          }
+
+
+   
+
+
+
+      defaultvideos();
 
 
 
